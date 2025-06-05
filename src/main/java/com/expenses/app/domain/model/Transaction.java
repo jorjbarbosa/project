@@ -79,4 +79,8 @@ public class Transaction {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    public BigDecimal getTransactionAmountWithSign() {
+        return TransactionType.INCOME.equals(type) ? amount : amount.negate();
+    }
 }

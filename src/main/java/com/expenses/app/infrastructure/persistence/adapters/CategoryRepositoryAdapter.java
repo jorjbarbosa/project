@@ -5,6 +5,7 @@ import com.expenses.app.domain.repositories.CategoryRepository;
 import com.expenses.app.infrastructure.mappers.CategoryMapper;
 import com.expenses.app.infrastructure.persistence.entities.CategoryEntity;
 import com.expenses.app.infrastructure.persistence.repositories.CategoryJpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,14 +14,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class CategoryRepositoryAdapter implements CategoryRepository {
     private final CategoryJpaRepository repository;
     private final CategoryMapper categoryMapper;
-
-    public CategoryRepositoryAdapter(CategoryJpaRepository repository, CategoryMapper categoryMapper) {
-        this.repository = repository;
-        this.categoryMapper = categoryMapper;
-    }
 
     @Override
     public Optional<Category> findById(UUID id) {
@@ -32,7 +29,7 @@ public class CategoryRepositoryAdapter implements CategoryRepository {
         return repository.findAll()
                 .stream()
                 .map(categoryMapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

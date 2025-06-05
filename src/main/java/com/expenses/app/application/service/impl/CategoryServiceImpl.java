@@ -1,6 +1,7 @@
 package com.expenses.app.application.service.impl;
 
 import com.expenses.app.application.service.ICategoryService;
+import com.expenses.app.domain.exception.BusinessException;
 import com.expenses.app.domain.model.Category;
 import com.expenses.app.domain.repositories.CategoryRepository;
 
@@ -21,7 +22,8 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public Category getCategoryById(UUID id) {
-        return categoryRepository.findById(id).orElse(null);
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("Category not found"));
     }
 
     @Override

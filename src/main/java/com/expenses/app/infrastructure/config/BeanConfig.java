@@ -12,6 +12,7 @@ import com.expenses.app.domain.repositories.AccountRepository;
 import com.expenses.app.domain.repositories.CategoryRepository;
 import com.expenses.app.domain.repositories.TransactionRepository;
 import com.expenses.app.domain.repositories.UserRepository;
+import com.expenses.app.domain.transactional.TransactionOperationOutputPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,13 +24,18 @@ public class BeanConfig {
     }
 
     @Bean
-    ITransactionService transactionService(TransactionRepository transactionRepository) {
-        return new TransactionServiceImpl(transactionRepository);
+    ITransactionService transactionService(
+            TransactionRepository transactionRepository,
+            CategoryRepository categoryRepository,
+            AccountRepository accountRepository,
+            IAccountService accountService,
+            TransactionOperationOutputPort transactionManager) {
+        return new TransactionServiceImpl(transactionRepository, categoryRepository, accountRepository, accountService, transactionManager);
     }
 
     @Bean
-    IAccountService accountService(AccountRepository accountRepository) {
-        return new AccountServiceImpl(accountRepository);
+    IAccountService accountService(AccountRepository accountRepository, TransactionRepository transactionRepository) {
+        return new AccountServiceImpl(accountRepository, transactionRepository);
     }
 
     @Bean

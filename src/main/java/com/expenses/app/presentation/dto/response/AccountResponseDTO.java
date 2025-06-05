@@ -1,17 +1,14 @@
 package com.expenses.app.presentation.dto.response;
 
-import com.expenses.app.domain.enums.CategoryType;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
-public class CategoryResponseDTO {
+public class AccountResponseDTO {
     private UUID id;
-
     private String name;
-
-    private String description;
-
-    private CategoryType type;
+    private BigDecimal initialBalance;
+    private BigDecimal currentBalance;
 }

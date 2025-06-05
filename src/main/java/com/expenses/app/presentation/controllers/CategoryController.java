@@ -4,13 +4,11 @@ import com.expenses.app.application.service.ICategoryService;
 import com.expenses.app.domain.model.Category;
 import com.expenses.app.infrastructure.mappers.CategoryMapper;
 import com.expenses.app.presentation.dto.request.CategoryRequestDTO;
+import com.expenses.app.presentation.dto.response.CategoryResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,9 +19,9 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody final CategoryRequestDTO request) {
+    public ResponseEntity<CategoryResponseDTO> createCategory(@RequestBody final CategoryRequestDTO request) {
         Category category = categoryMapper.fromDTO(request);
         Category createdCategory = this.categoryService.createCategory(category);
-        return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
+        return new ResponseEntity<>(categoryMapper.toResponseDTO(createdCategory), HttpStatus.CREATED);
     }
 }
